@@ -1,0 +1,363 @@
+<!-- <mat-toolbar color="primary" style="margin-bottom: 30px;">
+  <span class="fill-remaining-space" >
+    <img src="../../assets/logo.png" class="header-logo ">
+  </span>
+</mat-toolbar> -->
+<!-- Container -->
+<div class="container">
+  <div class="row"  style="float: right;">
+    <a routerLink="dawgList">DAWG LIST</a>
+  </div>
+  <!--  -->
+  
+  <!--  -->
+    <div class="col-md-8 form-template">
+    <mat-toolbar color="primary" style="margin-bottom: 30px;">
+        <span class="fill-remaining-space">CREATE DAWG FORM</span>
+      </mat-toolbar>
+
+      <form class="example-form " [formGroup]="dawgCreateForm" (ngSubmit)="submitForm()">
+        <!-- <mat-form-field class="example-full-width col-md-12" appearance="fill">
+          <mat-label>Form Id</mat-label>
+          <input matInput placeholder="Ex. Fedx2368" value="">
+        </mat-form-field> -->
+        <div class="row">
+          <div class="col-md-6">
+
+        <mat-form-field class="example-full-width col-md-12" appearance="fill">
+          <mat-label>Request TITLE</mat-label>
+          <input matInput placeholder="Ex. TITLE" value="" [formControlName]="'title'" required>
+          <mat-error>
+            Request Title is Required 
+          </mat-error>
+        </mat-form-field>
+        </div>
+        <div class="col-md-6">
+        <mat-form-field class="example-full-width col-md-12" appearance="fill">
+          <mat-label>PPM Project ID</mat-label>
+          <input matInput placeholder="Ex. PROJ244" value="" [formControlName]="'ppmProjectId'"
+           maxlength="8" required>
+          <mat-error>
+            PPM Project ID is Required 
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Data/Analytics</mat-label>
+          <mat-select [formControlName]="'dataAnalytics'" required>
+            <mat-option>None</mat-option>
+            <mat-option *ngFor="let option of analytics" [value]="option.data">
+              {{option.data}}
+            </mat-option>
+          </mat-select>
+          <mat-error>
+            Data/Analytics is Required 
+          </mat-error>
+        </mat-form-field>
+
+        <!-- <mat-form-field class="example-full-width col-md-12" appearance="fill">
+          <mat-label>Leave a comment</mat-label>
+          <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+        </mat-form-field> -->
+        
+        <!-- Back End  -->
+        <!-- <mat-form-field class="example-full-width col-md-12" appearance="fill">
+          <mat-label>Form submitted by</mat-label>
+          <input matInput placeholder="Ex. James" value="">
+        </mat-form-field> -->
+
+      
+        <mat-form-field appearance="fill">
+          <mat-label>Need-by Timeframe</mat-label>
+          <input matInput [matDatepicker]="picker" required [min]="tommorowDate"  placeholder="MM/DD/YYYY"
+           [formControlName]="'need_by_time'" required readonly>
+          <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+          <mat-datepicker #picker ></mat-datepicker>
+          <mat-error>
+            Need By Timeframe is Required 
+          </mat-error>
+        </mat-form-field>
+     
+        <mat-form-field class="example-full-width col-md-12" appearance="fill">
+          <mat-label>Need-by Rationalization</mat-label>
+          <textarea matInput placeholder="Ex. aswd" value="" 
+          [formControlName]="'need_by_rationalization'" required maxlength="250" rows="3"></textarea>
+          <mat-error>
+            Need By Rationalization is Required 
+          </mat-error>
+        </mat-form-field>
+     
+    
+        <!-- DAWG -->
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true"
+                               (closed)="panelOpenState = false" hideToggle="true" [expanded]="panelOpenState">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+               DAWG Comments
+              </mat-panel-title>
+              <mat-icon *ngIf="!panelOpenState">add</mat-icon>
+                <mat-icon *ngIf="panelOpenState">remove</mat-icon>
+            </mat-expansion-panel-header>
+            <!--  -->
+
+            <mat-form-field class="example-full-width col-md-12" appearance="fill">
+              <mat-label>DAWG Follow-up Questions</mat-label>
+              <textarea matInput placeholder="Ex. aswd" value="" 
+              [formControlName]="'dawg_follow_up_questions'" maxlength="250" rows="3"></textarea>
+            </mat-form-field>
+        
+            <mat-form-field class="example-full-width col-md-12" appearance="fill">
+              <mat-label>DAWG Recommendation</mat-label>
+              <textarea matInput placeholder="Ex. aswd" value="" 
+              [formControlName]="'dawg_recommendation'" maxlength="250" rows="3"></textarea>
+            </mat-form-field>
+       
+
+      
+        <mat-form-field class="example-full-width col-md-12" appearance="fill">
+          <mat-label>DAWG Cross Reference</mat-label>
+          <textarea matInput placeholder="Ex. aswd" value=""
+           [formControlName]="'dawg_cross_reference'" maxlength="80" rows="3"></textarea>
+        </mat-form-field>
+      
+        <mat-form-field class="example-full-width col-md-12" appearance="fill">
+          <mat-label>DAWG - Additional Comments</mat-label>
+          <textarea matInput placeholder="Ex. aswd" value="" 
+          [formControlName]="'dawg_additional_comments'" maxlength="250" rows="3"></textarea>
+        </mat-form-field>
+        
+
+        <div class="row">
+          <div class="col-md-6">
+
+        <mat-form-field class="example-full-width col-md-12" appearance="fill">
+          <mat-label>DAWG FLW-UP</mat-label>
+          <mat-select [(value)]="dawg_FLW_UP" [formControlName]="'dawg_FLW_UP'">
+            <mat-option>None</mat-option>
+            <mat-option value="option1">Yes</mat-option>
+            <mat-option value="option2">No</mat-option>
+            <mat-option value="option3">N/A</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width col-md-12" appearance="fill">
+          <mat-label>DAWG - Ready for DBA review</mat-label>
+          <mat-select [(value)]="dawg_ready_for_dba_review" [formControlName]="'dawg_ready_for_dba_review'">
+            <mat-option>None</mat-option>
+            <mat-option value="option1">Yes</mat-option>
+            <mat-option value="option2">No</mat-option>
+            <mat-option value="option3">N/A</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  
+        <!-- End DAWG -->
+
+        <mat-form-field class="example-full-width col-md-12" appearance="fill">
+          <mat-label>Kanban State</mat-label>
+          <!-- <mat-select>
+            <mat-option *ngFor="let food of foods" [value]="food.value">
+              {{food.viewValue}}
+            </mat-option>
+          </mat-select> -->
+          <mat-select [(value)]="kanban_state" [formControlName]="'kanban_state'">
+            <mat-option>None</mat-option>
+            <mat-option value="option1">Intake</mat-option>
+            <mat-option value="option2">Backlog</mat-option>
+            <mat-option value="option3">Done</mat-option>
+            <mat-option value="option3">Analysis</mat-option>
+            <mat-option value="option3">Cancelled</mat-option>
+            <mat-option value="option3">Funnel</mat-option>
+            <mat-option value="option3">On Hold</mat-option>
+            <mat-option value="option3">Implementation</mat-option>
+          </mat-select>
+        </mat-form-field>
+      <!-- Expand End Tag -->
+      </mat-expansion-panel>
+    </mat-accordion>
+        <!--  -->
+            <mat-form-field class="example-full-width col-md-12" appearance="fill">
+              <mat-label>Purpose</mat-label>
+              <textarea matInput placeholder="Ex. aswd" value=""
+               [formControlName]="'purpose'" maxlength="250" rows="3" required></textarea>
+              <mat-error>
+                Purpose is Required 
+              </mat-error>
+            </mat-form-field>
+            
+            <mat-form-field class="example-full-width col-md-12" appearance="fill">
+              <mat-label>Detailed Description</mat-label>
+              <textarea matInput placeholder="Ex. aswd" value="" 
+              [formControlName]="'detailed_desc'" maxlength="500" rows="3" required></textarea>
+              <mat-error>
+                Detailed Description is Required 
+              </mat-error>
+            </mat-form-field>
+            
+
+        
+            <mat-form-field class="example-full-width col-md-12" appearance="fill">
+              <mat-label>Acceptance Criteria</mat-label>
+              <textarea matInput placeholder="Ex. aswd" value="" 
+              [formControlName]="'acceptance_criteria'" maxlength="250" rows="3" required></textarea>
+              <mat-error>
+                Acceptance Criteria is Required 
+              </mat-error>
+            </mat-form-field>
+          
+            <mat-form-field class="example-full-width col-md-12" appearance="fill">
+              <mat-label>Data Source</mat-label>
+              <input matInput placeholder="Ex. aswd" value=""
+               [formControlName]="'data_source'" maxlength="80" required>
+              <mat-error>
+                Data Source is Required 
+              </mat-error>
+            </mat-form-field>
+         
+
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width col-md-12" appearance="fill">
+              <mat-label>Business Contact</mat-label>
+              <input matInput placeholder="Ex. aswd" value="" 
+              [formControlName]="'business_contact'" maxlength="80" required>
+              <mat-error>
+                Business Contact is Required 
+              </mat-error>
+            </mat-form-field>
+          </div>
+        <div class="col-md-6">
+          <mat-form-field class="example-full-width col-md-12" appearance="fill">
+            <mat-label>Requestor's Managing Director</mat-label>
+            <input matInput placeholder="Ex. aswd" value="" 
+            [formControlName]="'req_managing_director'" maxlength="80" required>
+            <mat-error>
+              Requestor's Managing Director is Required 
+            </mat-error>
+          </mat-form-field>
+          </div>
+      </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field appearance="fill">
+        <mat-label>Impacted OpCo(s)</mat-label>
+        <mat-select [formControlName]="'impactedOpc'" [(value)]="opc" multiple required >
+          
+          <mat-select-trigger>
+            {{opc ? opc[0] : ''}}
+            <span *ngIf="opc?.length > 1" class="example-additional-selection">
+              (+{{opc.length - 1}} {{opc?.length === 2 ? 'other' : 'others'}})
+            </span>
+          </mat-select-trigger>
+          <mat-option *ngFor="let opc of ImpactedOpcs" [value]="opc">{{opc}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="opc == ''">
+          Impacted OpCo(s) is Required 
+      </mat-error>
+      </mat-form-field>
+      
+    </div>
+
+    <div class="col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>Benefit</mat-label>
+        <mat-select [formControlName]="'valueBenefit'" [(value)]="benefit" multiple required>
+          <mat-select-trigger>
+            {{benefit? benefit[0] : ''}}
+            <span *ngIf="benefit?.length > 1" class="example-additional-selection">
+              (+{{benefit.length - 1}} {{benefit?.length === 2 ? 'other' : 'others'}})
+            </span>
+          </mat-select-trigger>
+          <mat-option *ngFor="let benefit of benefits" [value]="benefit">{{benefit}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="benefit == ''">
+          Benefit is Required 
+      </mat-error>
+      </mat-form-field>
+      </div>
+  </div>
+
+      <div class="row">
+        <div class="col-md-6">
+        <mat-form-field class="example-full-width col-md-12" appearance="fill">
+          <mat-label>Technical Contact</mat-label>
+          <input matInput placeholder="Ex. aswd" value=""
+           [formControlName]="'technical_contact'" maxlength="80" required>
+          <mat-error>
+            Technical Contact is Required 
+        </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width col-md-12" appearance="fill">
+          <mat-label>Completed FIRST ID</mat-label>
+          <input matInput placeholder="Ex. ASW233" value="" maxlength="8" [formControlName]="'completed_first_id'" required>
+          <mat-error>
+            Completed FIRST ID is Required 
+        </mat-error>
+        </mat-form-field>
+       
+      </div>
+    </div>
+          <!-- <mat-form-field class="example-full-width col-md-12" appearance="fill">
+            <mat-label>Modified</mat-label>
+            <input matInput placeholder="Ex. aswd" value="">
+          </mat-form-field> -->
+
+          
+
+          <div style="margin: 20px 0px 20px;">
+          <mat-label>Are you a Partner Plus member? </mat-label>
+          <mat-radio-group [formControlName]="'plus_member'">
+            <mat-radio-button class="radio-btn-margin" value="Yes">Yes</mat-radio-button>
+            <mat-radio-button class="radio-btn-margin" value="No">No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <mat-form-field>
+          <div>
+            
+            <mat-label>Attachments </mat-label>
+            <mat-toolbar>
+              <!-- Display files names -->
+              <input matInput readonly name="name" />
+            </mat-toolbar>
+            <!-- Fetch selected filed on change -->
+            <input type="file" #fileInput id="uploadFile" name="uploadFile" multiple="multiple"
+              accept="application/msword, .ppt, .pptx , .xlsx, .docx, .xls, .txt, 
+              text/plain, application/pdf " [formControlName]="'attachments'" (change)="onSelectFile($event);
+              onUpload();"/>
+              <!-- .ppt, .xlsx, .docx .pdf .txt -->
+              
+          </div>
+        </mat-form-field>
+          
+          <section>
+            <div class="example-button-row" style="text-align: right;">
+              <button mat-raised-button>Clear</button>
+              <button type="submit" mat-raised-button color="primary" style="background-color: #ff6200;"
+              [disabled]="!dawgCreateForm.valid" class="btn btn-accent m-btn m-btn--air m-btn--custom">
+              <span *ngIf="loader">
+                <i class="spinner-border" style="width: 1rem;height: 1rem;"></i>
+              </span>
+              Submit 
+              
+              <!-- Spinner -->
+              <!-- <mat-icon><mat-spinner diameter="20">
+              </mat-spinner></mat-icon> --> 
+            </button>
+            
+           
+            </div>
+          </section>
+          
+      </form>
+
+      
+    </div>
+</div>
